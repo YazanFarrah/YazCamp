@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Forms Demo</title>
+  </head>
+  <body>
+    <h1>Forms</h1>
+    <form action="/about.html">
+      <button type="button">Don't submit the form</button>
+      <p>
+        <label for="email">Enter your email:</label>
+        <input
+          type="email"
+          id="email"
+          placeholder="email"
+          name="email"
+          required
+        />
+      </p>
+      <p>
+        <label for="password">Enter a password:</label>
+        <input
+          type="password"
+          id="password"
+          placeholder="password"
+          name="password"
+          required
+          minlength="6"
+
+        />
+      </p>
+
+      <p>
+        <label for="cheese">Do you like cheese?</label>
+        <input type="checkbox" name="cheese" id="cheese" />
+      </p>
+
+      <p>
+        <label for="color">Enter a color:</label>
+        <input type="color" name="color" id="color" />
+      </p>
+
+      <p>
+        <label for="number">Enter a number:</label>
+        <input
+          type="number"
+          id="number"
+          placeholder="Enter a number"
+          name="number"
+          min="1"
+          max="1000"
+        />
+      </p>
+      <!-- Works this way too below without id or name -->
+
+      <p>
+        <label
+          >Enter your age
+          <input type="number" placeholder="Your age" />
+        </label>
+      </p>
+      <!-- by default a button in form submits the form -->
+      <button>Submit</button>
+      <input type="submit" value="Click me!" />
+    </form>
+    <hr />
+    <button>Outside form "Doesn't submit"</button>
+    <hr />
+    <h2>Another form</h2>
+    <!-- another form -->
+
+    <form action="https://www.reddit.com/search">
+      <input type="text" name="q" id="" />
+      <button>Search Reddit</button>
+    </form>
+
+    <form action="https://www.google.com/search">
+      <input type="text" name="q" id="" />
+      <button>Search Google</button>
+    </form>
+
+    <form action="https://www.youtube.com/results">
+      <input
+        type="text"
+        name="search_query"
+        id=""
+        placeholder="Search youtube"
+      />
+    </form>
+
+    <h2>More inputs</h2>
+    <form action="/birds">
+      <input type="checkbox" name="agree_tos" id="agree" required />
+      <label for="agree">I agree to the terms</label>
+      <p>
+        <label for="xs">XS</label>
+        <input type="radio" name="size" id="xs" value="x-small" />
+        <label for="s">S</label>
+        <input type="radio" name="size" id="s" value="small" />
+        <label for="m">M</label>
+        <input type="radio" name="size" id="m" value="medium" />
+      </p>
+
+      <p>
+        <label for="brand-select">Please select your favorite brand</label>
+        <select name="brand" id="brand-select" required>
+          <option value="">Please Select</option>
+          <option value="lv">L&V</option>
+          <option value="versace">Versace</option>
+          <option value="gucci">Gucci</option>
+          <option value="tom-ford">Tom Ford</option>
+        </select>
+      </p>
+      <p>
+        <label for="price">Price</label>
+        <input type="range" id="price" min="0" max="10" name="price" />
+      </p>
+      <p>
+        <label for="requests">Any special requests?</label>
+        <textarea name="requests" id="requests"></textarea>
+      </p>
+      <button>Submit</button>
+    </form>
+  </body>
+</html>
