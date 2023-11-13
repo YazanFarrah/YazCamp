@@ -1,35 +1,46 @@
-// // https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png
+const btn = document.querySelector("#v2");
 
-// const container = document.querySelector('#container');
-// const baseURL = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/'
+btn.onclick = () => {
+  console.log("You clicked me!");
+  console.log("I hope it works!");
+};
 
-// for (let i = 1; i <= 151; i++) {
-//     const pokemon = document.createElement('div');
-//     pokemon.classList.add('pokemon');
-//     const label = document.createElement('span');
-//     label.innerText = `#${i}`;
-//     const newImg = document.createElement('img');
-//     newImg.src = `${baseURL}${i}.png`
+function scream() {
+  console.log("AHHHHHHHHHHHHHHHHHHHHHH");
+  console.log("STOP TOUCHING MY PUSSY!");
+}
 
-//     pokemon.appendChild(newImg);
-//     pokemon.appendChild(label);
-//     container.appendChild(pokemon)
-// }
+btn.onmouseenter = scream;
 
-const container = document.querySelector("#container");
+const btn3 = document.querySelector("#v3");
 
-for (let i = 1; i <= 1017; i++) {
-  const pokemnon = document.createElement("div");
-  pokemnon.classList.add('pokemon');
-  const label = document.createElement("span");
-  label.innerText = `#${i}`;
-  const newImg = document.createElement("img");
+btn3.addEventListener("click", () => {
+  alert("Clicked");
+});
 
-  newImg.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${i}.png`;
+btn3.addEventListener("click", scream);
 
-  pokemnon.appendChild(newImg);
+const tasBtn = document.querySelector("#tas");
 
-  pokemnon.appendChild(label);
+/* 
+This below would cause to only execute the shout because it gets overridden
+tasBtn.onclick = twist;
+tasBtn.onclick = shout;
+while with addEventListener it works just fine, this case when having the same functionality like here
+both for 'click'
+*/
 
-  container.appendChild(pokemnon);
+tasBtn.addEventListener("click", twist, 
+//options:
+{
+  once: true,
+});
+tasBtn.addEventListener("click", shout);
+
+function twist() {
+  console.log("TWIST");
+}
+
+function shout() {
+  console.log("SHOUT");
 }
