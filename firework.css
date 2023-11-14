@@ -1,0 +1,51 @@
+/* styles.css */
+
+.firework-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+  }
+  
+  .firework {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #ffcc00;
+    border-radius: 50%;
+    opacity: 0;
+    animation: explode 1s ease-out;
+  }
+  
+  .firework::before,
+  .firework::after {
+    content: '';
+    position: absolute;
+    width: 4px;
+    height: 15px;
+    background: #ffcc00;
+    border-radius: 50%;
+  }
+  
+  .firework::before {
+    transform: rotate(45deg);
+  }
+  
+  .firework::after {
+    transform: rotate(-45deg);
+  }
+  
+  @keyframes explode {
+    0% {
+      transform: scale(0);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(5);
+      opacity: 0;
+    }
+  }
+  
