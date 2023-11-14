@@ -1,46 +1,35 @@
-const btn = document.querySelector("#v2");
-
-btn.onclick = () => {
-  console.log("You clicked me!");
-  console.log("I hope it works!");
-};
-
-function scream() {
-  console.log("AHHHHHHHHHHHHHHHHHHHHHH");
-  console.log("STOP TOUCHING MY PUSSY!");
-}
-
-btn.onmouseenter = scream;
-
-const btn3 = document.querySelector("#v3");
-
-btn3.addEventListener("click", () => {
-  alert("Clicked");
+document.querySelector("button").addEventListener("click", (evt) => {
+  console.log(evt);
+  alert("CLICK");
 });
 
-btn3.addEventListener("click", scream);
+const input = document.querySelector("input");
 
-const tasBtn = document.querySelector("#tas");
-
-/* 
-This below would cause to only execute the shout because it gets overridden
-tasBtn.onclick = twist;
-tasBtn.onclick = shout;
-while with addEventListener it works just fine, this case when having the same functionality like here
-both for 'click'
-*/
-
-tasBtn.addEventListener("click", twist, 
-//options:
-{
-  once: true,
+input.addEventListener("keydown", (e) => {
+  // console.log(e);
+  console.log(e.key);
+  console.log(e.code);
 });
-tasBtn.addEventListener("click", shout);
 
-function twist() {
-  console.log("TWIST");
-}
+// input.addEventListener("keyup", () => {
+//     console.log("KEYUP");
+//   });
 
-function shout() {
-  console.log("SHOUT");
-}
+window.addEventListener("keydown", (e) => {
+  switch (e.code) {
+    case "ArrowUp":
+      console.log("UP!");
+      break;
+    case "ArrowDown":
+      console.log("Down");
+      break;
+    case "ArrowLeft":
+      console.log("Left");
+      break;
+    case "ArrowRight":
+      console.log("Right");
+      break;
+    default:
+        console.log('IGNORED');
+  }
+});
