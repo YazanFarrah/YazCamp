@@ -3,7 +3,7 @@ const path = require("path");
 const app = express();
 const redditData = require("./data.json");
 
-app.use(express.static(path.join(__dirname, '/public')));
+app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", (req, res) => {
   res.render("home");
@@ -38,6 +38,14 @@ app.get("/random", (req, res) => {
   const num = Math.floor(Math.random() * 10) + 1;
   res.render("random", {
     randNum: num,
+  });
+});
+
+app.get("*", (req, res) => {
+  const request = req.params["0"].slice(1);
+
+  res.render("notFound", {
+    subreddit: request,
   });
 });
 
