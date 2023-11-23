@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>New Campground</title>
+  </head>
+  <body>
+    <form action="/campgrounds" method="POST">
+      <div>
+        <label for="title">Title</label>
+        <!-- using this way everything under campground "campground[title]",
+         "campground[location]" sends the data this way:
+{
+"campground": {
+    "title": "asasddasd",
+    "location": "asdasdasd"
+    }
+}
+
+while using title alone and location alone sends the data this way:
+{
+    "title": "asd",
+    "location": "123"
+}
+        -->
+        <input type="text" id="title" name="campground[title]" />
+      </div>
+      <div>
+        <label for="location">Location</label>
+        <input type="text" id="location" name="campground[location]" />
+      </div>
+      <button>Add Campground</button>
+    </form>
+    <a href="/campgrounds">All Campgrounds</a>
+  </body>
+</html>

@@ -1,52 +1,60 @@
-const Product = require("../models/product");
+const Campground = require("../models/campground");
 
-exports.getProducts = async (req, res) => {
-  const { category } = req.query;
-  if (category) {
-    const products = await Product.find({ category: category });
-    res.render("products/index", { products, category });
-  } else {
-    const products = await Product.find({});
-    res.render("products/index", { products, category: "All Products" });
+exports.getCampgrounds = async (req, res) => {
+  const campgrounds = await Campground.find({});
+  res.render("campgrounds/index", { campgrounds });
+};
+
+exports.getOneCampground = async (req, res) => {
+  await getIdRedirect(req, res, "show");
+};
+
+exports.getNewCamoground = (req, res) => {
+  res.render("campgrounds/new");
+};
+
+exports.postNewCampground = async (req, res) => {
+  const campground = new Campground(req.body.campground);
+  await campground.save();
+  res.redirect(`/campgrounds/${campground._id}`);
+};
+
+exports.getEditCampground = async (req, res) => {
+  getIdRedirect(req, res, "edit");
+};
+
+exports.editCampground = async (req, res) => {
+  const { id } = req.params;
+  const campground = await Campground.findByIdAndUpdate(id, {
+    ...req.body.campground,
+  });
+  res.redirect(`/campgrounds/${campground._id}`);
+};
+
+exports.deleteCampground = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedCamp = await Campground.findByIdAndDelete(id);
+    res.redirect("/campgrounds");
+  } catch (error) {
+    console.log(error);
   }
 };
 
-exports.getOneProduct = async (req, res) => {
-  const { id } = req.params;
-  const product = await Product.findById(id);
-  res.render("products/details", { product });
-};
-const categories = ["fruit", "vegetable", "dairy"];
-
-exports.getNewProduct = async (req, res) => {
-  res.render("products/new", { categories });
-};
-
-exports.addNewProduct = async (req, res) => {
-  const newProduct = new Product(req.body);
-  await newProduct.save();
-  console.log(newProduct);
-  res.redirect(`/products/${newProduct._id}`);
-};
-
-exports.getEditProduct = async (req, res) => {
-  const { id } = req.params;
-  const product = await Product.findById(id);
-  res.render("products/edit", { product, categories });
-};
-
-exports.editProduct = async (req, res) => {
-  const { id } = req.params;
-  const product = await Product.findByIdAndUpdate(id, req.body, {
-    runValidators: true,
-    new: true,
-  });
-
-  res.redirect(`/products/${product._id}`);
-};
-
-exports.deleteProduct = async (req, res) => {
-  const { id } = req.params;
-  const deletedProduct = await Product.findByIdAndDelete(id);
-  res.redirect("/products");
-};
+//function to get campground id from req.body
+//and redirect to a specific path
+async function getIdRedirect(req, res, path) {
+  try {
+    const { id } = req.params;
+    const campground = await Campground.findById(id);
+    if (!campground) {
+      console.log("camp not found");
+      return res.redirect("/campgrounds");
+    } else {
+      res.render(`campgrounds/${path}`, { campground });
+    }
+  } catch (error) {
+    console.log("Either Camp not found or failed to load it.");
+    return res.redirect("/campgrounds");
+  }
+}

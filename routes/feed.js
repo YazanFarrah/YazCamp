@@ -3,19 +3,19 @@ const router = express.Router();
 
 const feedController = require("../controller/feed");
 
-router.get("/products", feedController.getProducts);
+router.get("/campgrounds", feedController.getCampgrounds);
 
-router.get("/products/new", feedController.getNewProduct);
+//I put this route before /campgrounds/:id because 'new' would be considered as an id
+router.get("/campgrounds/new", feedController.getNewCamoground);
 
-router.get("/products/:id", feedController.getOneProduct);
+router.post("/campgrounds", feedController.postNewCampground);
 
-router.post("/products", feedController.addNewProduct);
+router.get("/campgrounds/:id", feedController.getOneCampground);
 
-router.get("/products/edit/:id", feedController.getEditProduct);
+router.get("/campgrounds/:id/edit", feedController.getEditCampground);
 
-router.put("/products/:id", feedController.editProduct);
+router.put("/campgrounds/:id", feedController.editCampground);
 
-router.delete("/products/:id", feedController.deleteProduct);
-
+router.delete("/campgrounds/:id", feedController.deleteCampground);
 
 module.exports = router;
