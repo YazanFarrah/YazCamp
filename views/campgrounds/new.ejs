@@ -4,7 +4,7 @@
   <!-- to make it have half the screen but not all the way aligned somewhere more, use
        offset-3 -->
   <div class="col-6 offset-3">
-    <form action="/campgrounds" method="POST">
+    <form action="/campgrounds" method="POST" novalidate class="validated-form">
       <div class="mb-3">
         <label for="title" class="form-label">Title</label>
         <input
@@ -14,6 +14,7 @@
           class="form-control"
           required
         />
+        <div class="valid-feedback">Bravo lil kid!</div>
       </div>
       <div class="mb-3">
         <label for="location" class="form-label">Location</label>
@@ -34,13 +35,16 @@
           class="form-control"
           required
         />
+        <div class="invalid-feedback">
+          Enter a valid URL.
+        </div>
       </div>
       <div class="mb-3">
         <label for="price" class="form-label">Campground Price</label>
         <div class="input-group">
           <span class="input-group-text" id="price-label">$</span>
           <input
-            type="number"
+            type="text"
             step="any"
             class="form-control"
             placeholder="0.00"

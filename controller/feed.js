@@ -1,37 +1,47 @@
 const Campground = require("../models/campground");
+const catchAsync = require("../utils/catchAsync");
+
 
 exports.getCampgrounds = async (req, res) => {
   const campgrounds = await Campground.find({});
   res.render("campgrounds/index", { campgrounds });
 };
 
-exports.getOneCampground = async (req, res) => {
-  await getIdRedirect(req, res, "show");
-};
+exports.getOneCampground = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
+  const campground = await Campground.findById(id);
+  res.render("campgrounds/show", { campground });
+});
 
 exports.getNewCamoground = (req, res) => {
   res.render("campgrounds/new");
 };
 
-exports.postNewCampground = async (req, res) => {
+exports.postNewCampground =  catchAsync(async (req, res, next) => {
   const campground = new Campground(req.body.campground);
   await campground.save();
   res.redirect(`/campgrounds/${campground._id}`);
-};
+});
 
-exports.getEditCampground = async (req, res) => {
-  getIdRedirect(req, res, "edit");
-};
+exports.getEditCampground = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
+  const campground = await Campground.findById(id);
+  // if (!campground) {
+  // throw new ExpressError("Camp not found", 404);
+  // } else {
+  res.render("campgrounds/edit", { campground });
+  // }
+});
 
-exports.editCampground = async (req, res) => {
+exports.editCampground =  catchAsync(async (req, res) => {
   const { id } = req.params;
   const campground = await Campground.findByIdAndUpdate(id, {
     ...req.body.campground,
   });
   res.redirect(`/campgrounds/${campground._id}`);
-};
+});
 
-exports.deleteCampground = async (req, res) => {
+exports.deleteCampground = catchAsync(async (req, res) => {
   try {
     const { id } = req.params;
     const deletedCamp = await Campground.findByIdAndDelete(id);
@@ -39,22 +49,7 @@ exports.deleteCampground = async (req, res) => {
   } catch (error) {
     console.log(error);
   }
-};
+});
 
 //function to get campground id from req.body
 //and redirect to a specific path
-async function getIdRedirect(req, res, path) {
-  try {
-    const { id } = req.params;
-    const campground = await Campground.findById(id);
-    if (!campground) {
-      console.log("camp not found");
-      return res.redirect("/campgrounds");
-    } else {
-      res.render(`campgrounds/${path}`, { campground });
-    }
-  } catch (error) {
-    console.log("Either Camp not found or failed to load it.");
-    return res.redirect("/campgrounds");
-  }
-}
