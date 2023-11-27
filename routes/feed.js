@@ -2,21 +2,38 @@ const express = require("express");
 const router = express.Router();
 
 const feedController = require("../controller/feed");
-const { validateCampground } = require('../middleware');
 
-router.get("/campgrounds", feedController.getCampgrounds);
+const farmController = require("../controller/farm");
 
-//I put this route before /campgrounds/:id because 'new' would be considered as an id
-router.get("/campgrounds/new", feedController.getNewCamoground);
+router.get("/products", feedController.getProducts);
 
-router.post("/campgrounds", validateCampground, feedController.postNewCampground);
+router.get("/products/new", feedController.getNewProduct);
 
-router.get("/campgrounds/:id", feedController.getOneCampground);
+router.get("/products/:id", feedController.getOneProduct);
 
-router.get("/campgrounds/:id/edit", feedController.getEditCampground);
+router.post("/products", feedController.addNewProduct);
 
-router.put("/campgrounds/:id", validateCampground, feedController.editCampground);
+router.get("/products/edit/:id", feedController.getEditProduct);
 
-router.delete("/campgrounds/:id", feedController.deleteCampground);
+router.put("/products/:id", feedController.editProduct);
+
+router.delete("/products/:id", feedController.deleteProduct);
+
+//farm routes
+
+router.get('/farms', farmController.getFarms)
+
+router.get('/farms/new', farmController.getNewFarm)
+
+router.get('/farms/:id', farmController.getOneFarm)
+
+router.post('/farms', farmController.addNewFarm)
+
+router.get('/farms/:id/products/new', farmController.getAddFarmProduct)
+
+router.post('/farms/:id/products', farmController.addFarmProduct)
+
+router.delete('/farms/:id', farmController.deleteFarm)
+
 
 module.exports = router;
