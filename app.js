@@ -4,8 +4,8 @@ const path = require("path");
 const mongoose = require("mongoose");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
-const morgan = require("morgan");
-
+//logger
+// const morgan = require("morgan");
 
 const ExpressError = require("./utils/ExpressError");
 const feedRouter = require("./routes/feed");
@@ -29,7 +29,7 @@ app.engine("ejs", ejsMate);
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 
-app.use("/", feedRouter);
+app.use("/campgrounds", feedRouter);
 
 app.all("*", (req, res, next) => {
   next(new ExpressError("Page Not Found", 404));

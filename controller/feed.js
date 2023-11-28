@@ -1,53 +1,71 @@
-const Product = require("../models/product");
+const Campground = require("../models/campground");
+const catchAsync = require("../utils/catchAsync");
+const Review = require('../models/review')
 
-exports.getProducts = async (req, res) => {
-  const { category } = req.query;
-  if (category) {
-    const products = await Product.find({ category: category });
-    res.render("products/index", { products, category });
-  } else {
-    const products = await Product.find({});
-    res.render("products/index", { products, category: "All Products" });
-  }
+exports.getCampgrounds = async (req, res) => {
+  const campgrounds = await Campground.find({});
+  res.render("campgrounds/index", { campgrounds });
 };
 
-exports.getOneProduct = async (req, res) => {
+exports.getOneCampground = catchAsync(async (req, res, next) => {
   const { id } = req.params;
-  const product = await Product.findById(id).populate('farm', 'name');
-  console.log(product)
-  res.render("products/details", { product });
-};
-const categories = ["fruit", "vegetable", "dairy"];
+  const campground = await Campground.findById(id).populate('reviews');
+  res.render("campgrounds/show", { campground });
+});
 
-exports.getNewProduct = async (req, res) => {
-  res.render("products/new", { categories });
+exports.getNewCamoground = (req, res) => {
+  res.render("campgrounds/new");
 };
 
-exports.addNewProduct = async (req, res) => {
-  const newProduct = new Product(req.body);
-  await newProduct.save();
-  console.log(newProduct);
-  res.redirect(`/products/${newProduct._id}`);
-};
+exports.postNewCampground = catchAsync(async (req, res, next) => {
+  const campground = new Campground(req.body.campground);
+  await campground.save();
+  res.redirect(`/campgrounds/${campground._id}`);
+});
 
-exports.getEditProduct = async (req, res) => {
+exports.getEditCampground = catchAsync(async (req, res, next) => {
   const { id } = req.params;
-  const product = await Product.findById(id);
-  res.render("products/edit", { product, categories });
-};
+  const campground = await Campground.findById(id);
+  // if (!campground) {
+  // throw new ExpressError("Camp not found", 404);
+  // } else {
+  res.render("campgrounds/edit", { campground });
+  // }
+});
 
-exports.editProduct = async (req, res) => {
+exports.editCampground = catchAsync(async (req, res) => {
   const { id } = req.params;
-  const product = await Product.findByIdAndUpdate(id, req.body, {
-    runValidators: true,
-    new: true,
+  const campground = await Campground.findByIdAndUpdate(id, {
+    ...req.body.campground,
   });
+  res.redirect(`/campgrounds/${campground._id}`);
+});
 
-  res.redirect(`/products/${product._id}`);
-};
+exports.deleteCampground = catchAsync(async (req, res) => {
 
-exports.deleteProduct = async (req, res) => {
   const { id } = req.params;
-  const deletedProduct = await Product.findByIdAndDelete(id);
-  res.redirect("/products");
-};
+  await Campground.findByIdAndDelete(id);
+  res.redirect("/campgrounds");
+
+});
+
+//reviews
+
+exports.addReview = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const campground = await Campground.findById(id);
+  const review = new Review(req.body.review);
+  campground.reviews.push(review);
+  await review.save();
+  await campground.save();
+  res.redirect(`/campgrounds/${campground._id}`);
+});
+
+exports.deleteReview = catchAsync(async (req, res) => {
+  const { id, reviewId } = req.params;
+  // $pull: is an operator from mongo, it removes from array values that match condition 
+  await Campground.findByIdAndUpdate(id, { $pull: { reviews: reviewId } })
+  await Review.findByIdAndDelete(reviewId);
+  res.redirect(`/campgrounds/${id}`);
+
+});
