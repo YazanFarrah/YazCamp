@@ -2,8 +2,9 @@ const express = require("express");
 const router = express.Router();
 
 const feedController = require("../controller/campground");
-const { validateCampground, validateReview } = require('../middleware');
+const { validateCampground } = require('../middlewares/validate');
 const { isLoggedIn } = require('../middlewares/isAuth');
+const { isCampAuthor } = require('../middlewares/isAuthor');
 
 
 router.get("/", feedController.getCampgrounds);
@@ -15,11 +16,11 @@ router.post("/", isLoggedIn, validateCampground, feedController.postNewCampgroun
 
 router.get("/:id", feedController.getOneCampground);
 
-router.get("/:id/edit",isLoggedIn, feedController.getEditCampground);
+router.get("/:id/edit", isLoggedIn, isCampAuthor, feedController.getEditCampground);
 
-router.put("/:id",isLoggedIn, validateCampground, feedController.editCampground);
+router.put("/:id", isLoggedIn, validateCampground, feedController.editCampground);
 
-router.delete("/:id", feedController.deleteCampground);
+router.delete("/:id", isLoggedIn, isCampAuthor, feedController.deleteCampground);
 
 
 module.exports = router;

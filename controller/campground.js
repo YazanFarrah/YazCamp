@@ -10,7 +10,16 @@ exports.getCampgrounds = async (req, res) => {
 
 exports.getOneCampground = catchAsync(async (req, res, next) => {
   const { id } = req.params;
-  const campground = await Campground.findById(id).populate('reviews');
+  //populate the reviews, then on each one of them, populate the author.
+  //Then separately, populate the author of the campground.
+  const campground = await Campground.findById(id).populate({
+    path: 'reviews',
+    populate: {
+      path: 'author'
+    }
+  }).populate('author');
+  console.log(campground);
+
   if (!campground) {
     req.flash('error', 'Campground doesn\'t exist or was deleted');
     return res.redirect('/campgrounds');
@@ -24,6 +33,7 @@ exports.getNewCamoground = (req, res) => {
 
 exports.postNewCampground = catchAsync(async (req, res, next) => {
   const campground = new Campground(req.body.campground);
+  campground.author = req.user._id;
   await campground.save();
   req.flash('success', 'Successfully made a new campground');
   res.redirect(`/campgrounds/${campground._id}`);
@@ -41,11 +51,12 @@ exports.getEditCampground = catchAsync(async (req, res, next) => {
 
 exports.editCampground = catchAsync(async (req, res) => {
   const { id } = req.params;
-  const campground = await Campground.findByIdAndUpdate(id, {
+  const camp = await Campground.findByIdAndUpdate(id, {
     ...req.body.campground,
   });
+
   req.flash('success', 'Successfully updated campground');
-  res.redirect(`/campgrounds/${campground._id}`);
+  res.redirect(`/campgrounds/${camp._id}`);
 });
 
 exports.deleteCampground = catchAsync(async (req, res) => {
@@ -56,24 +67,3 @@ exports.deleteCampground = catchAsync(async (req, res) => {
   res.redirect("/campgrounds");
 
 });
-
-//reviews
-
-// exports.addReview = catchAsync(async (req, res) => {
-//   const { id } = req.params;
-//   const campground = await Campground.findById(id);
-//   const review = new Review(req.body.review);
-//   campground.reviews.push(review);
-//   await review.save();
-//   await campground.save();
-//   res.redirect(`/campgrounds/${campground._id}`);
-// });
-
-// exports.deleteReview = catchAsync(async (req, res) => {
-//   const { id, reviewId } = req.params;
-//   // $pull: is an operator from mongo, it removes from array values that match condition
-//   await Campground.findByIdAndUpdate(id, { $pull: { reviews: reviewId } })
-//   await Review.findByIdAndDelete(reviewId);
-//   res.redirect(`/campgrounds/${id}`);
-
-// });
