@@ -4,7 +4,13 @@
   <!-- to make it have half the screen but not all the way aligned somewhere more, use
        offset-3 -->
   <div class="col-6 offset-3">
-    <form action="/campgrounds" method="POST" novalidate class="validated-form">
+    <form
+      action="/campgrounds"
+      method="POST"
+      novalidate
+      class="validated-form"
+      enctype="multipart/form-data"
+    >
       <div class="mb-3">
         <label for="title" class="form-label">Title</label>
         <input
@@ -27,18 +33,20 @@
         />
       </div>
       <div class="mb-3">
-        <label for="image" class="form-label">Image Url</label>
+        <label for="image" class="form-label">Choose image(s)...</label>
         <input
-          type="url"
-          id="image"
-          name="campground[image]"
           class="form-control"
-          required
+          type="file"
+          name="image"
+          id="image"
+          multiple
+          onchange="displayFiles(this)"
         />
-        <div class="invalid-feedback">
-          Enter a valid URL.
-        </div>
       </div>
+
+      <div class="mb-3" id="fileContainer">
+      </div>
+
       <div class="mb-3">
         <label for="price" class="form-label">Campground Price</label>
         <div class="input-group">

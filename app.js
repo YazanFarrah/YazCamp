@@ -1,3 +1,9 @@
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
+
+
+
 const express = require("express");
 const app = express();
 const path = require("path");
@@ -66,7 +72,7 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 
 //how to get out user of the session (unstore)
-passport.deserializeUser(User.deserializeUser()); 
+passport.deserializeUser(User.deserializeUser());
 
 // app.get('/fake-user', async (req, res, next) => {
 //   const user = new User({ email: 'yaz@gmail.com', username: 'yaz' });

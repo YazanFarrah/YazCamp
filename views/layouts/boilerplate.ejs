@@ -14,8 +14,9 @@
   </head>
   <body class="d-flex flex-column vh-100">
     <%-include('../partials/navbar') %>
-    <main class="container mt-5"><%-include('../partials/flash') %>
-       <%- body %></main>
+    <main class="container mt-5">
+      <%-include('../partials/flash') %> <%- body %>
+    </main>
     <%-include('../partials/footer') %>
     <!-- bootstrap js links -->
     <script
@@ -28,6 +29,11 @@
       integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
       crossorigin="anonymous"
     ></script>
+    
+    <script src="/javascripts/displayFiles.js"></script>
+    
+    <!-- bs custom file -->
+    <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js"></script>
     <!-- bootstrap validation -->
     <script src="/javascripts/validateForms.js"></script>
   </body>

@@ -4,18 +4,19 @@ const router = express.Router();
 const authController = require('../controller/auth');
 const passport = require('passport');
 const { storeReturnTo } = require('../middlewares/isAuth');
-router.get('/register', authController.getRegister);
 
-router.post('/register', authController.register);
+router.route('/register')
+    .get(authController.getRegister)
+    .post(authController.register);
 
-router.get('/login', authController.getLogin);
+router.route('/login')
+    .get(authController.getLogin)
+    .post(storeReturnTo, passport.authenticate('local',
 
-router.post('/login', storeReturnTo, passport.authenticate('local',
-
-    { failureFlash: true, failureRedirect: '/auth/login' }
-),
-    authController.login
-);
+        { failureFlash: true, failureRedirect: '/auth/login' }
+    ),
+        authController.login
+    );
 
 router.get('/logout', authController.getLogout);
 
