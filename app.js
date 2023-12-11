@@ -32,10 +32,10 @@ mongoose
     console.log("MONGO CONNECTION ERROR");
   });
 
+app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-app.engine("ejs", ejsMate);
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, 'public')))
@@ -80,15 +80,18 @@ passport.deserializeUser(User.deserializeUser());
 //   res.send(newUser);
 // });
 
-app.get('/', (req, res) => {
-  res.render('home');
-})
+
 
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;
   res.locals.success = req.flash('success');
   res.locals.error = req.flash('error');
   next();
+});
+
+
+app.get('/', (req, res) => {
+  res.render('home');
 })
 
 app.use("/campgrounds", feedRoutes);

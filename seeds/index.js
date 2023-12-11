@@ -22,15 +22,15 @@ const seedDB = async () => {
 
   await Campground.deleteMany({});
 
-  for (let i = 0; i < 200; i++) {
-    let rand = Math.floor(Math.random() * 164);
+  for (let i = 0; i < cities.length; i++) {
+    let rand = Math.floor(Math.random() * cities.length);
     const {
       city,
       lat,
       lng
     } = cities[rand];
-    const province = cities[rand].admin_name;
-    
+    const province = cities[rand].country;
+
 
     const randomImages = [];
     for (let j = 0; j < 4; j++) {
@@ -49,6 +49,10 @@ const seedDB = async () => {
       //typing only price is a shortcut for price: price, since they have the same name
       price,
       images: [...randomImages],
+      geometry: {
+        type: 'Point',
+        coordinates: [lng, lat],
+      }
     });
     await camp.save();
   }

@@ -15,6 +15,9 @@ exports.addReview = async (req, res) => {
     res.redirect(`/campgrounds/${campground._id}`);
 };
 
+
+
+
 exports.deleteReview = async (req, res) => {
     const { id, reviewId } = req.params;
     // $pull: is an operator from mongo, it removes from array values that match condition 

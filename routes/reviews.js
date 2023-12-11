@@ -11,6 +11,7 @@ const { isReviewAuthor } = require('../middlewares/isAuthor');
 
 router.post('/', isLoggedIn, validateReview, catchAsync(reviewController.addReview));
 
+
 router.delete('/:reviewId', isLoggedIn, isReviewAuthor, catchAsync(reviewController.deleteReview));
 
 
