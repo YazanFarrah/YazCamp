@@ -13,7 +13,10 @@ const ejsMate = require("ejs-mate");
 const session = require('express-session');
 const flash = require('connect-flash');
 const passport = require('passport');
-const LocalStrategy = require('passport-local')
+const LocalStrategy = require('passport-local');
+const mongoSanitize = require('express-mongo-sanitize');
+
+
 const User = require('./models/user');
 //logger
 // const morgan = require("morgan");
@@ -31,7 +34,7 @@ mongoose
   .catch((err) => {
     console.log("MONGO CONNECTION ERROR");
   });
-
+app.use(mongoSanitize());
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -83,6 +86,7 @@ passport.deserializeUser(User.deserializeUser());
 
 
 app.use((req, res, next) => {
+  console.log(req.query);
   res.locals.currentUser = req.user;
   res.locals.success = req.flash('success');
   res.locals.error = req.flash('error');
