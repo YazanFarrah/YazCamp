@@ -19,8 +19,8 @@ const helmet = require('helmet');
 
 
 const User = require('./models/user');
-//logger
-// const morgan = require("morgan");
+// logger
+const morgan = require("morgan");
 
 const ExpressError = require("./utils/ExpressError");
 const feedRoutes = require("./routes/campgrounds");
@@ -60,7 +60,7 @@ app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, 'public')))
 
 //logger
-// app.use(morgan("dev"));
+app.use(morgan("dev"));
 
 const sessionConfig = {
   store: store,
