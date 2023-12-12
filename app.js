@@ -2,8 +2,6 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
 }
 
-
-
 const express = require("express");
 const app = express();
 const path = require("path");
@@ -11,6 +9,8 @@ const mongoose = require("mongoose");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const session = require('express-session');
+const MongoStore = require('connect-mongo');
+
 const flash = require('connect-flash');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
@@ -26,15 +26,30 @@ const ExpressError = require("./utils/ExpressError");
 const feedRoutes = require("./routes/campgrounds");
 const reviewRoutes = require("./routes/reviews");
 const authRoutes = require("./routes/auth");
+const dbUrl = process.env.DB_URL;
+
+const store = MongoStore.create({
+  mongoUrl: dbUrl,
+  touchAfter: 24 * 60 * 60,
+  crypto: {
+    secret: 'thisshouldbebettersecret'
+  }
+});
+
+
+store.on("error", function (e) {
+  console.log('SESSION STORE ERROR', e);
+});
 
 mongoose
-  .connect("mongodb://0.0.0.0/yelp-camp")
+  .connect(dbUrl)
   .then(() => {
     console.log("MONGO CONNECTION OPEN");
   })
   .catch((err) => {
     console.log("MONGO CONNECTION ERROR");
   });
+
 app.use(mongoSanitize());
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
@@ -48,6 +63,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 // app.use(morgan("dev"));
 
 const sessionConfig = {
+  store: store,
   name: 'c.ses.yc',
   secret: 'thisshouldbebettersecret',
   resave: false,
