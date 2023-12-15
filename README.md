@@ -12,7 +12,7 @@ YazCamp is a full-stack web application designed for exploring and sharing campg
 
 ## Live Demo
    
-   [(https://yazcamp.onrender.com/)]
+   https://yazcamp.onrender.com/
   
 
 ## Getting Started
