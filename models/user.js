@@ -7,7 +7,7 @@ const UserSchema = new Schema({
         type: String,
         required: true,
         unique: true,
-    }
+    },
 });
 //adds unique usernames fields, adds password field
 UserSchema.plugin(passportLocalMongoose);

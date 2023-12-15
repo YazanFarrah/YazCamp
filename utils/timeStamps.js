@@ -1,6 +1,6 @@
 // timeUtils.js
 exports.getTimeDifference = (createdAt) => {
-    if (createdAt === undefined || createdAt === NaN) {
+    if (createdAt === undefined || isNaN(new Date(createdAt))) {
         return 'long time';
     }
     const currentDate = new Date();

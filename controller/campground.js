@@ -2,6 +2,7 @@ const Campground = require("../models/campground");
 const { getTimeDifference } = require('../utils/timeStamps');
 const { cloudinary } = require('../cloudinary')
 const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
+const User = require("../models/user");
 const mapBoxToken = process.env.MAPBOX_TOKEN;
 const geocoder = mbxGeocoding({ accessToken: mapBoxToken });
 
@@ -33,6 +34,12 @@ exports.getOneCampground = async (req, res, next) => {
 
 exports.getNewCamoground = (req, res) => {
   res.render("campgrounds/new");
+};
+
+exports.getCamogroundUsers = async (req, res) => {
+  const users = await User.find({});
+
+  res.render("users", {users});
 };
 
 exports.postNewCampground = async (req, res, next) => {

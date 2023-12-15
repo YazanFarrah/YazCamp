@@ -20,6 +20,8 @@ router.route('/')
 //I put this route before /campgrounds/:id because 'new' would be considered as an id
 router.get("/new", isLoggedIn, feedController.getNewCamoground);
 
+router.get("/users", catchAsync(feedController.getCamogroundUsers));
+
 router.route('/:id')
     .get(catchAsync(feedController.getOneCampground))
     .put(isLoggedIn, isCampAuthor, upload.array('image'), validateCampground, catchAsync(feedController.editCampground))

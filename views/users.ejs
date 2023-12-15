@@ -1,0 +1,49 @@
+<% layout('layouts/boilerplate') %>
+<div class="container mt-3 mb-4">
+  <div class="">
+    <div class="row">
+      <div class="col-md-12">
+        <div
+          class="user-dashboard-info-box table-responsive mb-0 bg-white p-4 shadow-sm"
+        >
+          <table class="table manage-candidates-top mb-0">
+            <thead>
+              <tr>
+                <th>Username</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% for(let user of users){ %>
+              <tr class="candidates-list">
+                <td class="title">
+                  <div class="thumb">
+                    <img
+                      class="img-fluid"
+                      src="https://bootdey.com/img/Content/avatar/avatar4.png"
+                      alt=""
+                    />
+                  </div>
+                  <div class="candidate-list-details">
+                    <div class="candidate-list-info">
+                      <div class="candidate-list-title">
+                        <h5 class="mb-0"><a href="#"><%=user.username%></a></h5>
+                      </div>
+                      <div class="candidate-list-option">
+                        <ul class="list-unstyled">
+                          <li>
+                            <i class="fas fa-filter pr-1"></i><%=user.email%>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -8,7 +8,7 @@ const {
 } = require('uuid');
 
 mongoose
-  .connect("mongodb://0.0.0.0/yelp-camp")
+  .connect("mongodb+srv://yelp-first-user:7Sr67f0faTj0aG5w@cluster0.40ehbqk.mongodb.net/?retryWrites=true&w=majority")
   .then(() => {
     console.log("MONGO CONNECTION OPEN");
   })
@@ -41,7 +41,7 @@ const seedDB = async () => {
     }
     const price = Math.floor(Math.random() * 20) + 10;
     const camp = new Campground({
-      author: '6567b044253530c5f02bf7b3',
+      author: '6577a1ab81d22d2a75b7e5e6',
       location: `${city}, ${province}`,
       title: `${seeder(descriptors)} ${seeder(places)}`,
       description:

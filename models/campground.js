@@ -15,7 +15,7 @@ const Schema = mongoose.Schema;
 //   return this.url.replace('/upload', '/upload/c_thumb,h_150,w_150');
 // });
 
-const opts = { toJSON: { virtuals: true } };
+const opts = { toJSON: { virtuals: true }, timestamps: true  };
 //adding this option to access mongoose virtuals from inside our mapbox code clusterMap.js
 
 const CampgroundSchema = new Schema({
@@ -54,7 +54,6 @@ const CampgroundSchema = new Schema({
 
 },
   opts,
-  { timestamps: true }
 );
 
 // using . to nest in virtual 
