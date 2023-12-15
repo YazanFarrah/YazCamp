@@ -20,7 +20,7 @@ YazCamp is a full-stack web application designed for exploring and sharing campg
 Install dependencies:
 ```bash
 cd yazcamp
-`npm install`
+npm install
 ```
 2. **Configure environment variables:**
    Create a .env file in the root directory.
@@ -28,4 +28,5 @@ cd yazcamp
 
 3. **Run the application:**
    ```bash
-   `npm start
+   npm start
+   ```
