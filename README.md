@@ -34,5 +34,5 @@ YazCamp is a full-stack web application designed for exploring and sharing campg
 
 4. **Run the application:**
    ```bash
-   npm start
+   node app.js
    ```
