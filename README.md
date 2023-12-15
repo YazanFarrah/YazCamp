@@ -18,11 +18,14 @@ YazCamp is a full-stack web application designed for exploring and sharing campg
    git clone https://github.com/YazanFarrah/web-development-bootcamp.git
 
 Install dependencies:
-`cd yazcamp`
+```bash
+cd yazcamp
 `npm install`
+```
 2. **Configure environment variables:**
    Create a .env file in the root directory.
    Add the necessary environment variables, such as MongoDB connection string, Cloudinary API key, etc.
 
 3. **Run the application:**
-   `npm start`
+   ```bash
+   `npm start
