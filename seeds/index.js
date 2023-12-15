@@ -8,7 +8,7 @@ const {
 } = require('uuid');
 
 mongoose
-  .connect("mongodb+srv://yelp-first-user:7Sr67f0faTj0aG5w@cluster0.40ehbqk.mongodb.net/?retryWrites=true&w=majority")
+  .connect("mongodb://0.0.0.0/YOUR DATABASE NAME")
   .then(() => {
     console.log("MONGO CONNECTION OPEN");
   })
